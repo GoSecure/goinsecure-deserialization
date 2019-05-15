@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>Monitoring application</title>
+</head>
+<body>
+
+<h2>System Statuses</h2>
+
+<table border="2">
+    <tr><th>System</th> <th>Status</th></tr>
+
+    <tr><td>Web Server 1</td> <td id="web1"></td></tr>
+    <tr><td>Web Server 2</td> <td id="web2"></td></tr>
+    <tr><td>Web Server 3</td> <td id="web3"></td></tr>
+    <tr><td>Database 1</td> <td id="db1"></td></tr>
+    <tr><td>Database 2</td> <td id="db2"></td></tr>
+    <tr><td>Database 3</td> <td id="db3"></td></tr>
+</table>
+
+<br/>
+<br/>
+
+<img src="images/server.webp">
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+function update(i,systems) {
+    $.get( "/getStatus", {'systemid':systems[i]} , function( data ) {
+
+        $( '#'+systems[i])[0].innerHTML=data;
+    });
+}
+
+function refresh() {
+
+    var systems = ['web1','web2','web3','db1','db2','db3'];
+    for (var i = 0; i < systems.length; i++) {
+        update(i,systems);
+    }
+}
+
+setInterval(refresh, 20000);
+refresh();
+</script>
+</body>
+</html>
